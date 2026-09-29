@@ -1,0 +1,1155 @@
+{
+ "files": 50,
+ "total_bytes": 77570816,
+ "file_kb": {
+  "min": 62.245,
+  "median": 1264.346,
+  "max": 6301.838
+ },
+ "bundle_types": {
+  "transaction": 50
+ },
+ "entries_per_bundle": {
+  "min": 29,
+  "median": 381.0,
+  "max": 1760,
+  "total": 23613
+ },
+ "resources": {
+  "Observation": {
+   "total": 6257,
+   "patients_with": 50,
+   "per_patient_min": 12,
+   "per_patient_median": 87.0,
+   "per_patient_max": 842
+  },
+  "Claim": {
+   "total": 2993,
+   "patients_with": 50,
+   "per_patient_min": 1,
+   "per_patient_median": 39.5,
+   "per_patient_max": 353
+  },
+  "DiagnosticReport": {
+   "total": 2604,
+   "patients_with": 50,
+   "per_patient_min": 2,
+   "per_patient_median": 41.5,
+   "per_patient_max": 160
+  },
+  "Procedure": {
+   "total": 2393,
+   "patients_with": 49,
+   "per_patient_min": 2,
+   "per_patient_median": 34,
+   "per_patient_max": 393
+  },
+  "Encounter": {
+   "total": 1713,
+   "patients_with": 50,
+   "per_patient_min": 1,
+   "per_patient_median": 28.5,
+   "per_patient_max": 117
+  },
+  "DocumentReference": {
+   "total": 1713,
+   "patients_with": 50,
+   "per_patient_min": 1,
+   "per_patient_median": 28.5,
+   "per_patient_max": 117
+  },
+  "ExplanationOfBenefit": {
+   "total": 1713,
+   "patients_with": 50,
+   "per_patient_min": 1,
+   "per_patient_median": 28.5,
+   "per_patient_max": 117
+  },
+  "Condition": {
+   "total": 1516,
+   "patients_with": 49,
+   "per_patient_min": 1,
+   "per_patient_median": 25,
+   "per_patient_max": 94
+  },
+  "MedicationRequest": {
+   "total": 1280,
+   "patients_with": 44,
+   "per_patient_min": 1,
+   "per_patient_median": 9.0,
+   "per_patient_max": 236
+  },
+  "SupplyDelivery": {
+   "total": 545,
+   "patients_with": 23,
+   "per_patient_min": 1,
+   "per_patient_median": 19,
+   "per_patient_max": 118
+  },
+  "Immunization": {
+   "total": 389,
+   "patients_with": 50,
+   "per_patient_min": 1,
+   "per_patient_median": 7.0,
+   "per_patient_max": 26
+  },
+  "CareTeam": {
+   "total": 129,
+   "patients_with": 43,
+   "per_patient_min": 1,
+   "per_patient_median": 3,
+   "per_patient_max": 11
+  },
+  "CarePlan": {
+   "total": 129,
+   "patients_with": 43,
+   "per_patient_min": 1,
+   "per_patient_median": 3,
+   "per_patient_max": 11
+  },
+  "Device": {
+   "total": 57,
+   "patients_with": 30,
+   "per_patient_min": 1,
+   "per_patient_median": 1.0,
+   "per_patient_max": 9
+  },
+  "Patient": {
+   "total": 50,
+   "patients_with": 50,
+   "per_patient_min": 1,
+   "per_patient_median": 1.0,
+   "per_patient_max": 1
+  },
+  "Provenance": {
+   "total": 50,
+   "patients_with": 50,
+   "per_patient_min": 1,
+   "per_patient_median": 1.0,
+   "per_patient_max": 1
+  },
+  "AllergyIntolerance": {
+   "total": 40,
+   "patients_with": 7,
+   "per_patient_min": 1,
+   "per_patient_median": 7,
+   "per_patient_max": 9
+  },
+  "ImagingStudy": {
+   "total": 16,
+   "patients_with": 3,
+   "per_patient_min": 1,
+   "per_patient_median": 1,
+   "per_patient_max": 14
+  },
+  "Medication": {
+   "total": 13,
+   "patients_with": 4,
+   "per_patient_min": 1,
+   "per_patient_median": 2.5,
+   "per_patient_max": 7
+  },
+  "MedicationAdministration": {
+   "total": 13,
+   "patients_with": 4,
+   "per_patient_min": 1,
+   "per_patient_median": 2.5,
+   "per_patient_max": 7
+  }
+ },
+ "field_fill_pct": {
+  "Patient": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "meta": 100.0,
+   "text": 100.0,
+   "extension": 100.0,
+   "identifier": 100.0,
+   "name": 100.0,
+   "telecom": 100.0,
+   "gender": 100.0,
+   "birthDate": 100.0,
+   "address": 100.0,
+   "maritalStatus": 100.0,
+   "communication": 100.0,
+   "multipleBirthBoolean": 96.0,
+   "deceasedDateTime": 10.0,
+   "multipleBirthInteger": 4.0
+  },
+  "Encounter": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "meta": 100.0,
+   "identifier": 100.0,
+   "status": 100.0,
+   "class": 100.0,
+   "type": 100.0,
+   "subject": 100.0,
+   "participant": 100.0,
+   "period": 100.0,
+   "location": 100.0,
+   "serviceProvider": 100.0,
+   "reasonCode": 24.0,
+   "hospitalization": 0.4
+  },
+  "Condition": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "meta": 100.0,
+   "clinicalStatus": 100.0,
+   "verificationStatus": 100.0,
+   "category": 100.0,
+   "code": 100.0,
+   "subject": 100.0,
+   "encounter": 100.0,
+   "onsetDateTime": 100.0,
+   "recordedDate": 100.0,
+   "abatementDateTime": 72.7
+  },
+  "DiagnosticReport": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "meta": 100.0,
+   "status": 100.0,
+   "category": 100.0,
+   "code": 100.0,
+   "subject": 100.0,
+   "encounter": 100.0,
+   "effectiveDateTime": 100.0,
+   "issued": 100.0,
+   "performer": 100.0,
+   "presentedForm": 65.8,
+   "result": 34.2
+  },
+  "DocumentReference": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "meta": 100.0,
+   "identifier": 100.0,
+   "status": 100.0,
+   "type": 100.0,
+   "category": 100.0,
+   "subject": 100.0,
+   "date": 100.0,
+   "author": 100.0,
+   "custodian": 100.0,
+   "content": 100.0,
+   "context": 100.0
+  },
+  "Claim": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "status": 100.0,
+   "type": 100.0,
+   "use": 100.0,
+   "patient": 100.0,
+   "billablePeriod": 100.0,
+   "created": 100.0,
+   "provider": 100.0,
+   "priority": 100.0,
+   "insurance": 100.0,
+   "item": 100.0,
+   "total": 100.0,
+   "facility": 57.2,
+   "prescription": 42.8,
+   "supportingInfo": 36.5,
+   "diagnosis": 35.0,
+   "procedure": 16.9
+  },
+  "ExplanationOfBenefit": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "contained": 100.0,
+   "identifier": 100.0,
+   "status": 100.0,
+   "type": 100.0,
+   "use": 100.0,
+   "patient": 100.0,
+   "billablePeriod": 100.0,
+   "created": 100.0,
+   "insurer": 100.0,
+   "provider": 100.0,
+   "referral": 100.0,
+   "facility": 100.0,
+   "claim": 100.0,
+   "outcome": 100.0,
+   "careTeam": 100.0,
+   "insurance": 100.0,
+   "item": 100.0,
+   "total": 100.0,
+   "payment": 100.0,
+   "diagnosis": 61.2
+  },
+  "CareTeam": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "meta": 100.0,
+   "status": 100.0,
+   "subject": 100.0,
+   "encounter": 100.0,
+   "period": 100.0,
+   "participant": 100.0,
+   "managingOrganization": 100.0,
+   "reasonCode": 51.9
+  },
+  "CarePlan": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "meta": 100.0,
+   "text": 100.0,
+   "status": 100.0,
+   "intent": 100.0,
+   "category": 100.0,
+   "subject": 100.0,
+   "encounter": 100.0,
+   "period": 100.0,
+   "careTeam": 100.0,
+   "activity": 100.0,
+   "addresses": 50.4
+  },
+  "Device": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "meta": 100.0,
+   "udiCarrier": 100.0,
+   "status": 100.0,
+   "distinctIdentifier": 100.0,
+   "manufactureDate": 100.0,
+   "expirationDate": 100.0,
+   "lotNumber": 100.0,
+   "serialNumber": 100.0,
+   "deviceName": 100.0,
+   "type": 100.0,
+   "patient": 100.0
+  },
+  "MedicationRequest": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "meta": 100.0,
+   "status": 100.0,
+   "intent": 100.0,
+   "subject": 100.0,
+   "encounter": 100.0,
+   "authoredOn": 100.0,
+   "requester": 100.0,
+   "medicationCodeableConcept": 99.0,
+   "reasonReference": 67.3,
+   "dosageInstruction": 66.4,
+   "medicationReference": 1.0
+  },
+  "Observation": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "status": 100.0,
+   "category": 100.0,
+   "code": 100.0,
+   "subject": 100.0,
+   "encounter": 100.0,
+   "effectiveDateTime": 100.0,
+   "issued": 100.0,
+   "valueQuantity": 86.1,
+   "meta": 79.1,
+   "component": 7.6,
+   "valueCodeableConcept": 5.8,
+   "valueString": 0.5
+  },
+  "Procedure": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "meta": 100.0,
+   "status": 100.0,
+   "code": 100.0,
+   "subject": 100.0,
+   "encounter": 100.0,
+   "performedPeriod": 100.0,
+   "location": 100.0,
+   "reasonReference": 15.3
+  },
+  "Immunization": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "meta": 100.0,
+   "status": 100.0,
+   "vaccineCode": 100.0,
+   "patient": 100.0,
+   "encounter": 100.0,
+   "occurrenceDateTime": 100.0,
+   "primarySource": 100.0,
+   "location": 100.0
+  },
+  "Provenance": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "meta": 100.0,
+   "target": 100.0,
+   "recorded": 100.0,
+   "agent": 100.0
+  },
+  "SupplyDelivery": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "status": 100.0,
+   "patient": 100.0,
+   "type": 100.0,
+   "suppliedItem": 100.0,
+   "occurrenceDateTime": 100.0
+  },
+  "AllergyIntolerance": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "meta": 100.0,
+   "clinicalStatus": 100.0,
+   "verificationStatus": 100.0,
+   "type": 100.0,
+   "category": 100.0,
+   "criticality": 100.0,
+   "code": 100.0,
+   "patient": 100.0,
+   "recordedDate": 100.0,
+   "reaction": 52.5
+  },
+  "ImagingStudy": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "identifier": 100.0,
+   "status": 100.0,
+   "subject": 100.0,
+   "encounter": 100.0,
+   "started": 100.0,
+   "numberOfSeries": 100.0,
+   "numberOfInstances": 100.0,
+   "procedureCode": 100.0,
+   "location": 100.0,
+   "series": 100.0
+  },
+  "Medication": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "meta": 100.0,
+   "code": 100.0,
+   "status": 100.0
+  },
+  "MedicationAdministration": {
+   "resourceType": 100.0,
+   "id": 100.0,
+   "status": 100.0,
+   "medicationCodeableConcept": 100.0,
+   "subject": 100.0,
+   "context": 100.0,
+   "effectiveDateTime": 100.0,
+   "reasonReference": 76.9,
+   "dosage": 15.4
+  }
+ },
+ "code_systems": {
+  "Condition": {
+   "http://snomed.info/sct": 1516
+  },
+  "DiagnosticReport": {
+   "http://loinc.org": 4317
+  },
+  "MedicationRequest": {
+   "http://www.nlm.nih.gov/research/umls/rxnorm": 1267
+  },
+  "Observation": {
+   "http://loinc.org": 6348
+  },
+  "Procedure": {
+   "http://snomed.info/sct": 2393
+  },
+  "Immunization": {
+   "http://hl7.org/fhir/sid/cvx": 389
+  },
+  "AllergyIntolerance": {
+   "http://snomed.info/sct": 36,
+   "http://www.nlm.nih.gov/research/umls/rxnorm": 4
+  },
+  "Medication": {
+   "http://www.nlm.nih.gov/research/umls/rxnorm": 13
+  },
+  "MedicationAdministration": {
+   "http://www.nlm.nih.gov/research/umls/rxnorm": 13
+  }
+ },
+ "top_codes": {
+  "Condition": [
+   {
+    "system": "http://snomed.info/sct",
+    "code": "160903007",
+    "display": "Full-time employment (finding)",
+    "count": 594
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "73595000",
+    "display": "Stress (finding)",
+    "count": 229
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "160904001",
+    "display": "Part-time employment (finding)",
+    "count": 71
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "423315002",
+    "display": "Limited social contact (finding)",
+    "count": 48
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "422650009",
+    "display": "Social isolation (finding)",
+    "count": 41
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "741062008",
+    "display": "Not in labor force (finding)",
+    "count": 28
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "444814009",
+    "display": "Viral sinusitis (disorder)",
+    "count": 28
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "15777000",
+    "display": "Prediabetes",
+    "count": 23
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "224299000",
+    "display": "Received higher education (finding)",
+    "count": 23
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "706893006",
+    "display": "Victim of intimate partner abuse (finding)",
+    "count": 22
+   }
+  ],
+  "DiagnosticReport": [
+   {
+    "system": "http://loinc.org",
+    "code": "34117-2",
+    "display": "History and physical note",
+    "count": 1713
+   },
+   {
+    "system": "http://loinc.org",
+    "code": "51847-2",
+    "display": "Evaluation+Plan note",
+    "count": 1713
+   },
+   {
+    "system": "http://loinc.org",
+    "code": "55757-9",
+    "display": "Patient Health Questionnaire 2 item (PHQ-2) [Reported]",
+    "count": 147
+   },
+   {
+    "system": "http://loinc.org",
+    "code": "51990-0",
+    "display": "Basic Metabolic Panel",
+    "count": 113
+   },
+   {
+    "system": "http://loinc.org",
+    "code": "69737-5",
+    "display": "Generalized anxiety disorder 7 item (GAD-7)",
+    "count": 103
+   },
+   {
+    "system": "http://loinc.org",
+    "code": "57698-3",
+    "display": "Lipid Panel",
+    "count": 91
+   },
+   {
+    "system": "http://loinc.org",
+    "code": "58410-2",
+    "display": "Complete blood count (hemogram) panel - Blood by Automated count",
+    "count": 71
+   },
+   {
+    "system": "http://loinc.org",
+    "code": "82666-9",
+    "display": "Drug Abuse Screening Test-10 [DAST-10]",
+    "count": 58
+   },
+   {
+    "system": "http://loinc.org",
+    "code": "72109-2",
+    "display": "Alcohol Use Disorder Identification Test - Consumption [AUDIT-C]",
+    "count": 57
+   },
+   {
+    "system": "http://loinc.org",
+    "code": "76499-3",
+    "display": "Humiliation, Afraid, Rape, and Kick questionnaire [HARK]",
+    "count": 44
+   }
+  ],
+  "MedicationRequest": [
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "310798",
+    "display": "Hydrochlorothiazide 25 MG Oral Tablet",
+    "count": 229
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "314076",
+    "display": "lisinopril 10 MG Oral Tablet",
+    "count": 201
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "308136",
+    "display": "amLODIPine 2.5 MG Oral Tablet",
+    "count": 97
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "860975",
+    "display": "24 HR Metformin hydrochloride 500 MG Extended Release Oral Tablet",
+    "count": 94
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "314231",
+    "display": "Simvastatin 10 MG Oral Tablet",
+    "count": 60
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "705129",
+    "display": "Nitroglycerin 0.4 MG/ACTUAT Mucosal Spray",
+    "count": 56
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "896209",
+    "display": "60 ACTUAT Fluticasone propionate 0.25 MG/ACTUAT / salmeterol 0.05 MG/ACTUAT Dry Powder Inhaler",
+    "count": 43
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "245314",
+    "display": "albuterol 5 MG/ML Inhalation Solution",
+    "count": 43
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "106892",
+    "display": "insulin human, isophane 70 UNT/ML / Regular Insulin, Human 30 UNT/ML Injectable Suspension [Humulin]",
+    "count": 37
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "309362",
+    "display": "Clopidogrel 75 MG Oral Tablet",
+    "count": 32
+   }
+  ],
+  "Observation": [
+   {
+    "system": "http://loinc.org",
+    "code": "29463-7",
+    "display": "Body Weight",
+    "count": 288
+   },
+   {
+    "system": "http://loinc.org",
+    "code": "85354-9",
+    "display": "Blood Pressure",
+    "count": 280
+   },
+   {
+    "system": "http://loinc.org",
+    "code": "8867-4",
+    "display": "Heart rate",
+    "count": 274
+   },
+   {
+    "system": "http://loinc.org",
+    "code": "9279-1",
+    "display": "Respiratory rate",
+    "count": 274
+   },
+   {
+    "system": "http://loinc.org",
+    "code": "8302-2",
+    "display": "Body Height",
+    "count": 259
+   },
+   {
+    "system": "http://loinc.org",
+    "code": "72514-3",
+    "display": "Pain severity - 0-10 verbal numeric rating [Score] - Reported",
+    "count": 257
+   },
+   {
+    "system": "http://loinc.org",
+    "code": "72166-2",
+    "display": "Tobacco smoking status NHIS",
+    "count": 254
+   },
+   {
+    "system": "http://loinc.org",
+    "code": "39156-5",
+    "display": "Body Mass Index",
+    "count": 231
+   },
+   {
+    "system": "http://loinc.org",
+    "code": "93025-5",
+    "display": "Protocol for Responding to and Assessing Patients' Assets, Risks, and Experiences [PRAPARE]",
+    "count": 189
+   },
+   {
+    "system": "http://loinc.org",
+    "code": "55758-7",
+    "display": "Patient Health Questionnaire 2 item (PHQ-2) total score [Reported]",
+    "count": 147
+   }
+  ],
+  "Procedure": [
+   {
+    "system": "http://snomed.info/sct",
+    "code": "385763009",
+    "display": "Hospice care (regime/therapy)",
+    "count": 263
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "710824005",
+    "display": "Assessment of health and social care needs (procedure)",
+    "count": 192
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "171207006",
+    "display": "Depression screening (procedure)",
+    "count": 162
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "454711000124102",
+    "display": "Depression screening using Patient Health Questionnaire Two-Item score (procedure)",
+    "count": 147
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "428211000124100",
+    "display": "Assessment of substance use (procedure)",
+    "count": 129
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "430193006",
+    "display": "Medication Reconciliation (procedure)",
+    "count": 125
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "410401003",
+    "display": "Nursing care/supplementary surveillance (regime/therapy)",
+    "count": 108
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "710841007",
+    "display": "Assessment of anxiety (procedure)",
+    "count": 103
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "91251008",
+    "display": "Physical therapy procedure (regime/therapy)",
+    "count": 103
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "84478008",
+    "display": "Occupational therapy (regime/therapy)",
+    "count": 102
+   }
+  ],
+  "Immunization": [
+   {
+    "system": "http://hl7.org/fhir/sid/cvx",
+    "code": "140",
+    "display": "Influenza, seasonal, injectable, preservative free",
+    "count": 206
+   },
+   {
+    "system": "http://hl7.org/fhir/sid/cvx",
+    "code": "208",
+    "display": "SARS-COV-2 (COVID-19) vaccine, mRNA, spike protein, LNP, preservative free, 30 mcg/0.3mL dose",
+    "count": 28
+   },
+   {
+    "system": "http://hl7.org/fhir/sid/cvx",
+    "code": "207",
+    "display": "SARS-COV-2 (COVID-19) vaccine, mRNA, spike protein, LNP, preservative free, 100 mcg/0.5mL dose",
+    "count": 28
+   },
+   {
+    "system": "http://hl7.org/fhir/sid/cvx",
+    "code": "113",
+    "display": "Td (adult) preservative free",
+    "count": 16
+   },
+   {
+    "system": "http://hl7.org/fhir/sid/cvx",
+    "code": "133",
+    "display": "Pneumococcal conjugate PCV 13",
+    "count": 14
+   },
+   {
+    "system": "http://hl7.org/fhir/sid/cvx",
+    "code": "20",
+    "display": "DTaP",
+    "count": 13
+   },
+   {
+    "system": "http://hl7.org/fhir/sid/cvx",
+    "code": "08",
+    "display": "Hep B, adolescent or pediatric",
+    "count": 10
+   },
+   {
+    "system": "http://hl7.org/fhir/sid/cvx",
+    "code": "10",
+    "display": "IPV",
+    "count": 10
+   },
+   {
+    "system": "http://hl7.org/fhir/sid/cvx",
+    "code": "43",
+    "display": "Hep B, adult",
+    "count": 10
+   },
+   {
+    "system": "http://hl7.org/fhir/sid/cvx",
+    "code": "49",
+    "display": "Hib (PRP-OMP)",
+    "count": 9
+   }
+  ],
+  "AllergyIntolerance": [
+   {
+    "system": "http://snomed.info/sct",
+    "code": "84489001",
+    "display": "Mold (organism)",
+    "count": 5
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "264287008",
+    "display": "Animal dander (substance)",
+    "count": 5
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "256277009",
+    "display": "Grass pollen (substance)",
+    "count": 4
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "288328004",
+    "display": "Bee venom (substance)",
+    "count": 4
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "260147004",
+    "display": "House dust mite (organism)",
+    "count": 4
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "111088007",
+    "display": "Latex (substance)",
+    "count": 3
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "782576004",
+    "display": "Tree pollen (substance)",
+    "count": 3
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "1191",
+    "display": "Aspirin",
+    "count": 3
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "735029006",
+    "display": "Shellfish (substance)",
+    "count": 2
+   },
+   {
+    "system": "http://snomed.info/sct",
+    "code": "735971005",
+    "display": "Fish (substance)",
+    "count": 2
+   }
+  ],
+  "Medication": [
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "1659131",
+    "display": "piperacillin 2000 MG / tazobactam 250 MG Injection",
+    "count": 3
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "1807510",
+    "display": "150 ML vancomycin 5 MG/ML Injection",
+    "count": 3
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "1719286",
+    "display": "10 ML Furosemide 10 MG/ML Injection",
+    "count": 1
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "854235",
+    "display": "0.4 ML Enoxaparin sodium 100 MG/ML Prefilled Syringe",
+    "count": 1
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "2123111",
+    "display": "NDA020503 200 ACTUAT Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler",
+    "count": 1
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "198440",
+    "display": "Acetaminophen 500 MG Oral Tablet",
+    "count": 1
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "854252",
+    "display": "1 ML Enoxaparin sodium 150 MG/ML Prefilled Syringe",
+    "count": 1
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "245314",
+    "display": "Albuterol 5 MG/ML Inhalation Solution",
+    "count": 1
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "242969",
+    "display": "4 ML norepinephrine 1 MG/ML Injection",
+    "count": 1
+   }
+  ],
+  "MedicationAdministration": [
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "1659131",
+    "display": "piperacillin 2000 MG / tazobactam 250 MG Injection",
+    "count": 3
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "1807510",
+    "display": "150 ML vancomycin 5 MG/ML Injection",
+    "count": 3
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "1719286",
+    "display": "10 ML Furosemide 10 MG/ML Injection",
+    "count": 1
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "854235",
+    "display": "0.4 ML Enoxaparin sodium 100 MG/ML Prefilled Syringe",
+    "count": 1
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "2123111",
+    "display": "NDA020503 200 ACTUAT Albuterol 0.09 MG/ACTUAT Metered Dose Inhaler",
+    "count": 1
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "198440",
+    "display": "Acetaminophen 500 MG Oral Tablet",
+    "count": 1
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "854252",
+    "display": "1 ML Enoxaparin sodium 150 MG/ML Prefilled Syringe",
+    "count": 1
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "245314",
+    "display": "Albuterol 5 MG/ML Inhalation Solution",
+    "count": 1
+   },
+   {
+    "system": "http://www.nlm.nih.gov/research/umls/rxnorm",
+    "code": "242969",
+    "display": "4 ML norepinephrine 1 MG/ML Injection",
+    "count": 1
+   }
+  ]
+ },
+ "observation_value_types": {
+  "valueQuantity": 5387,
+  "component": 474,
+  "valueCodeableConcept": 366,
+  "valueString": 30
+ },
+ "observation_units_top": {
+  "mg/dL": 1010,
+  "{score}": 692,
+  "mmol/L": 616,
+  "/min": 548,
+  "%": 430,
+  "cm": 291,
+  "kg": 288,
+  "kg/m2": 231,
+  "fL": 218,
+  "g/dL": 216,
+  "10*3/uL": 208,
+  "U/L": 129,
+  "10*6/uL": 71,
+  "pg": 71,
+  "{#}": 41
+ },
+ "date_range": {
+  "Encounter": {
+   "min": "1931-05-25",
+   "max": "2022-04-12",
+   "with_date": 1713
+  },
+  "Condition": {
+   "min": "1931-05-25",
+   "max": "2022-04-02",
+   "with_date": 1516
+  },
+  "DiagnosticReport": {
+   "min": "1931-05-25",
+   "max": "2022-04-12",
+   "with_date": 2604
+  },
+  "DocumentReference": {
+   "min": "1931-05-25",
+   "max": "2022-04-12",
+   "with_date": 1713
+  },
+  "Claim": {
+   "min": "1931-05-25",
+   "max": "2022-04-12",
+   "with_date": 2993
+  },
+  "ExplanationOfBenefit": {
+   "min": "1931-05-25",
+   "max": "2022-04-12",
+   "with_date": 1713
+  },
+  "CareTeam": {
+   "min": "1943-03-02",
+   "max": "2022-02-18",
+   "with_date": 129
+  },
+  "CarePlan": {
+   "min": "1943-03-02",
+   "max": "2022-02-18",
+   "with_date": 129
+  },
+  "MedicationRequest": {
+   "min": "1953-06-21",
+   "max": "2022-04-09",
+   "with_date": 1280
+  },
+  "Observation": {
+   "min": "1982-07-19",
+   "max": "2022-04-12",
+   "with_date": 6257
+  },
+  "Procedure": {
+   "min": "1982-07-19",
+   "max": "2022-04-12",
+   "with_date": 2393
+  },
+  "Immunization": {
+   "min": "1982-07-19",
+   "max": "2022-04-12",
+   "with_date": 389
+  },
+  "SupplyDelivery": {
+   "min": "1959-04-20",
+   "max": "2022-01-27",
+   "with_date": 545
+  },
+  "AllergyIntolerance": {
+   "min": "1943-03-19",
+   "max": "1996-10-26",
+   "with_date": 40
+  },
+  "MedicationAdministration": {
+   "min": "1982-10-14",
+   "max": "2021-05-06",
+   "with_date": 13
+  }
+ },
+ "patients": {
+  "gender": {
+   "female": 28,
+   "male": 22
+  },
+  "birth_min": "1913-03-31",
+  "birth_max": "2022-03-23",
+  "deceased": 5,
+  "states": {
+   "MA": 50
+  },
+  "cities_distinct": 41,
+  "cities_top": {
+   "Boston": 6,
+   "East Bridgewater": 2,
+   "Lawrence": 2,
+   "Pittsfield": 2,
+   "Ashland": 2
+  }
+ },
+ "references": {
+  "kinds": {
+   "urn:uuid (inside the bundle)": 85670,
+   "conditional (search, e.g. Practitioner?identifier=...)": 29105,
+   "other: #referral": 1713,
+   "other: #coverage": 1713
+  },
+  "broken_urn_uuid_by_type": {}
+ },
+ "text": {
+  "replacement_chars_U+FFFD": 0,
+  "double_encoded_sequences": 0
+ }
+}

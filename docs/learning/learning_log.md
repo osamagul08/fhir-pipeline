@@ -14,3 +14,33 @@ because no real person is in it - but its numbers say nothing about real health.
 ### Same standard is not the same data
 Both marketplaces had "FHIR synthetic data", from different makers. Comparing
 platforms needs the identical dataset on both; otherwise you compare the data.
+
+### Resources and references
+Each FHIR record (Patient, Encounter, Claim...) is a "resource". Records point to each
+other: a Claim says which Patient it is for. Like an invoice quoting a customer number:
+the number is only useful if the customer exists - so we check every link.
+
+### Conditional references
+Some links are a search ("the Practitioner with NPI 12345") instead of a direct pointer.
+Like "the doctor with licence number X" instead of "the doctor on page 12". They only
+resolve against separate reference files (hospitals, practitioners).
+
+### Medical code systems
+The same idea as postcodes: a code means nothing without its system. LOINC for lab tests,
+SNOMED CT for diagnoses and procedures, RxNorm for medicines, CVX for vaccines.
+
+### Check the data, not the screen
+A name showed as "Qui?ones" in the terminal, but the file held "Quiñones" correctly. The
+Windows terminal could not display the letter. Print escape codes to see the real bytes.
+
+### information_schema
+Every catalog gets it automatically: read-only views that answer live from Unity
+Catalog's central register (the metastore). Like the contents list on a cupboard door -
+it describes what is inside, it is not the contents. Part of the SQL standard, so
+PostgreSQL, MySQL and Snowflake have it too.
+
+### Where table and column names come from
+The views' own headings (table_name, column_name) are fixed by the SQL standard. The
+values come from whoever created the table: our SQL and aliases, or - with Auto Loader -
+the data itself (a JSON key "birthDate" becomes column birthDate). Table names are stored
+lower case; column names keep their case.
