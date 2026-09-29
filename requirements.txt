@@ -1,0 +1,29 @@
+# Python packages for the scripts in scripts/.
+#
+# Versions are PINNED (==) to the exact versions this project was built and
+# tested with. The brief's risk table: "Client version mismatch -> Pin client
+# versions; document the working matrix." An unpinned install could pull a newer
+# connector that behaves differently, and a result would change for no visible
+# reason.
+#
+# Install on a new machine:
+#     python -m pip install -r requirements.txt
+#
+# The Snowflake CLI is deliberately NOT here. It pins older versions of requests,
+# packaging and python-dotenv, so it lives in its own environment (.venv-snowcli)
+# where it cannot disturb these. See tools/snow.cmd.
+
+# --- reading .env credentials ---
+python-dotenv==1.2.3
+
+# --- the two platform connectors ---
+databricks-sql-connector==4.6.0
+snowflake-connector-python[pandas]==4.7.5
+
+# --- data handling ---
+pandas==2.3.3
+pyarrow==25.0.1
+numpy==2.5.3
+
+# --- REST API calls (job_status.py, pipeline_status.py) ---
+requests==2.34.2

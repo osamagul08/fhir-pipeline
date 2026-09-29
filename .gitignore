@@ -1,0 +1,40 @@
+# Secrets. Never commit these.
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+token.txt
+.databrickscfg
+
+# Raw and downloaded data: FHIR bundles can be large. Keep them out of git.
+data/
+*.json.gz
+*.ndjson
+*.parquet
+*.csv
+
+# Marketplace reference material: covered by the listing's terms of service,
+# kept locally for reading, not redistributed through git.
+docs/reference/*.html
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# Databricks asset bundle cache
+.databricks/
+
+# Power BI: commit the .pbip text, never the data cache or .pbix
+*.pbix
+**/.pbi/cache.abf
+**/.pbi/localSettings.json
+
+# OS and editor noise
+Thumbs.db
+desktop.ini
+.DS_Store
+.vscode/
