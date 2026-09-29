@@ -1,0 +1,223 @@
+{
+ "resources": [
+  {
+   "resource_type": "Observation",
+   "total": 162313,
+   "files_with_it": 1153
+  },
+  {
+   "resource_type": "Claim",
+   "total": 90858,
+   "files_with_it": 1154
+  },
+  {
+   "resource_type": "DiagnosticReport",
+   "total": 67774,
+   "files_with_it": 1154
+  },
+  {
+   "resource_type": "Procedure",
+   "total": 61275,
+   "files_with_it": 1152
+  },
+  {
+   "resource_type": "ExplanationOfBenefit",
+   "total": 46050,
+   "files_with_it": 1154
+  },
+  {
+   "resource_type": "DocumentReference",
+   "total": 46050,
+   "files_with_it": 1154
+  },
+  {
+   "resource_type": "Encounter",
+   "total": 46050,
+   "files_with_it": 1154
+  },
+  {
+   "resource_type": "MedicationRequest",
+   "total": 44808,
+   "files_with_it": 1030
+  },
+  {
+   "resource_type": "Condition",
+   "total": 32076,
+   "files_with_it": 1136
+  },
+  {
+   "resource_type": "Immunization",
+   "total": 9577,
+   "files_with_it": 1152
+  },
+  {
+   "resource_type": "SupplyDelivery",
+   "total": 7653,
+   "files_with_it": 360
+  },
+  {
+   "resource_type": "CareTeam",
+   "total": 2950,
+   "files_with_it": 977
+  },
+  {
+   "resource_type": "CarePlan",
+   "total": 2950,
+   "files_with_it": 977
+  },
+  {
+   "resource_type": "PractitionerRole",
+   "total": 1377,
+   "files_with_it": 1
+  },
+  {
+   "resource_type": "Location",
+   "total": 1377,
+   "files_with_it": 1
+  },
+  {
+   "resource_type": "Practitioner",
+   "total": 1377,
+   "files_with_it": 1
+  },
+  {
+   "resource_type": "Organization",
+   "total": 1376,
+   "files_with_it": 1
+  },
+  {
+   "resource_type": "Patient",
+   "total": 1154,
+   "files_with_it": 1154
+  },
+  {
+   "resource_type": "Provenance",
+   "total": 1154,
+   "files_with_it": 1154
+  },
+  {
+   "resource_type": "Device",
+   "total": 931,
+   "files_with_it": 542
+  },
+  {
+   "resource_type": "AllergyIntolerance",
+   "total": 836,
+   "files_with_it": 178
+  },
+  {
+   "resource_type": "MedicationAdministration",
+   "total": 583,
+   "files_with_it": 103
+  },
+  {
+   "resource_type": "Medication",
+   "total": 583,
+   "files_with_it": 103
+  },
+  {
+   "resource_type": "ImagingStudy",
+   "total": 498,
+   "files_with_it": 133
+  }
+ ],
+ "patients": [
+  {
+   "gender": "female",
+   "state": "MA",
+   "deceased": false,
+   "patients": 514,
+   "born_first": "1919-01-14",
+   "born_last": "2022-03-12"
+  },
+  {
+   "gender": "male",
+   "state": "MA",
+   "deceased": false,
+   "patients": 486,
+   "born_first": "1913-08-15",
+   "born_last": "2022-03-23"
+  },
+  {
+   "gender": "male",
+   "state": "MA",
+   "deceased": true,
+   "patients": 86,
+   "born_first": "1913-03-31",
+   "born_last": "2016-12-02"
+  },
+  {
+   "gender": "female",
+   "state": "MA",
+   "deceased": true,
+   "patients": 68,
+   "born_first": "1919-01-14",
+   "born_last": "2011-09-30"
+  }
+ ],
+ "encounter_dates": [
+  {
+   "first_visit": "1920-09-06T08:03:11+00:00",
+   "last_visit": "2022-04-12T13:53:56+00:00",
+   "encounters": 46050
+  }
+ ],
+ "conditional_links": [
+  {
+   "target_type": "Practitioner",
+   "links": 372416,
+   "found": 372416,
+   "not_found": 0,
+   "distinct_targets_asked": 1207
+  },
+  {
+   "target_type": "Organization",
+   "links": 209940,
+   "found": 209940,
+   "not_found": 0,
+   "distinct_targets_asked": 1207
+  },
+  {
+   "target_type": "Location",
+   "links": 92100,
+   "found": 91854,
+   "not_found": 246,
+   "distinct_targets_asked": 1207
+  }
+ ],
+ "summary": {
+  "files": 1156,
+  "total_bytes": 2078464849,
+  "records": 631630,
+  "bundle_types": {
+   "transaction": 1154,
+   "batch": 2
+  },
+  "non_patient_files": [
+   {
+    "file": "practitionerInformation1649789466584.json",
+    "bytes": 4418570,
+    "bundle_type": "batch",
+    "records": 2754
+   },
+   {
+    "file": "hospitalInformation1649789466584.json",
+    "bytes": 4244224,
+    "bundle_type": "batch",
+    "records": 2753
+   }
+  ],
+  "records_per_file": {
+   "min": 29,
+   "median": 375,
+   "max": 13192
+  }
+ },
+ "query_seconds": {
+  "files": 55.8,
+  "resources": 4.5,
+  "patients": 58.8,
+  "encounter_dates": 6.8,
+  "conditional_links": 62.9
+ }
+}

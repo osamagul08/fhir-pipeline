@@ -123,3 +123,76 @@ cm (291), kg (288), kg/m2 (231).
 4. **Observation needs care**: four value types, and blood pressure hides in `component`.
 5. **Geography is one state**: city-level only.
 6. **Load in batches** to practise incremental loading: the source itself never changes.
+
+---
+
+## 4. Full profile — all 1,156 files, inside Databricks (2026-09-29)
+
+`scripts/profile/profile_databricks.py`, read-only, straight from S3 on the SQL
+warehouse. Raw result: `docs/profiles/full_1156.json`. Query time 188.8 s
+(files 55.8, resources 4.5, patients 58.8, encounter dates 6.8, links 62.9).
+
+### 4.1 Files and bundles
+
+| | Measured |
+|---|---|
+| Files | 1,156 = **1,154 patient bundles** (`transaction`) + **2 reference bundles** (`batch`) |
+| Reference files | `practitionerInformation…` 4.4 MB, 2,754 records · `hospitalInformation…` 4.2 MB, 2,753 records |
+| Records, all files | **631,630** |
+| Records per file | min 29 · median 375 · **max 13,192** |
+
+### 4.2 Record types (24)
+
+| Resource | Total | Files with it |
+|---|---|---|
+| Observation | 162,313 | 1,153 |
+| Claim | 90,858 | 1,154 |
+| DiagnosticReport | 67,774 | 1,154 |
+| Procedure | 61,275 | 1,152 |
+| Encounter / DocumentReference / ExplanationOfBenefit | **46,050 each** | 1,154 |
+| MedicationRequest | 44,808 | 1,030 |
+| Condition | 32,076 | 1,136 |
+| Immunization | 9,577 | 1,152 |
+| SupplyDelivery | 7,653 | 360 |
+| CareTeam / CarePlan | 2,950 each | 977 |
+| Practitioner / PractitionerRole / Location | 1,377 each | 1 (reference file) |
+| Organization | 1,376 | 1 (reference file) |
+| Patient / Provenance | 1,154 each | 1,154 |
+| Device | 931 | 542 |
+| AllergyIntolerance | 836 | 178 |
+| Medication / MedicationAdministration | 583 each | 103 |
+| ImagingStudy | 498 | 133 |
+
+The sample's pattern holds on the full data: every Encounter has exactly one
+DocumentReference and one ExplanationOfBenefit (46,050 each).
+
+### 4.3 Patients
+
+| Gender | Alive | Deceased |
+|---|---|---|
+| female | 514 | 68 |
+| male | 486 | 86 |
+| **total** | **1,000** | **154** |
+
+- **All 1,154 in Massachusetts** (confirmed on the full data).
+- Born 1913-03-31 .. 2022-03-23.
+- Visits (Encounter `period.start`): **1920-09-06 .. 2022-04-12**, 46,050 visits.
+
+### 4.4 Links to doctors, hospitals, locations
+
+| Target | Links | Found in reference files | **Not found** | Distinct targets asked |
+|---|---|---|---|---|
+| Practitioner | 372,416 | 372,416 | 0 | 1,207 |
+| Organization | 209,940 | 209,940 | 0 | 1,207 |
+| Location | 92,100 | 91,854 | **246** | 1,207 |
+
+**246 Location links point to a location that does not exist** in the reference
+file. The first real quarantine case. Which records, and why: NOT MEASURED yet.
+
+### 4.5 Found while profiling: one field name, different shapes
+
+`address` is a **list** in Patient but a **single object** in Location. Read with
+one merged schema for all record types, Databricks fell back to typing `address`
+as STRING, and `address[0].state` failed (`INVALID_EXTRACT_BASE_FIELD_TYPE`).
+**Design rule for silver:** give each resource type its own schema; never flatten
+all record types through one merged schema.

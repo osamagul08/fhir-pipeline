@@ -99,3 +99,11 @@ One-file test on the SQL warehouse, smallest source file (62 KB):
 
 **Consequence:** no download or upload is needed. Bronze can read the source with
 `multiLine` JSON, and the full profile can run inside Databricks.
+
+### D7 — Full profile done inside Databricks (2026-09-29)
+
+All 1,156 files profiled on the SQL warehouse, 188.8 s of queries; details in
+`docs/design/dataset_profile.md` section 4. The first run failed on the
+`address` shape conflict and its first two results were lost (the script saved
+only at the end, 182.6 s wasted); fixed by saving after every query. Cost of
+both runs: NOT MEASURED (Databricks billing not readable on this trial).

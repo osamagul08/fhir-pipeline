@@ -53,3 +53,13 @@ big object over many lines, so it needs multiLine => true. Like reading a shoppi
 ### _rescued_data
 A column Databricks adds when reading files: any value that does not fit the detected
 shape is kept there instead of being thrown away. Built-in "nothing silently dropped".
+
+### Same field name, different shape
+In FHIR, Patient.address is a list but Location.address is one object. Read all
+record types through one schema and Databricks falls back to plain text. Like one
+form where some people write one phone number and others a list: give each form
+type its own layout. Rule: one schema per resource type.
+
+### Save work as you go
+A script that saves only at the end loses everything when step 3 of 5 fails.
+Saving after each step means a rerun only redoes what is missing.
