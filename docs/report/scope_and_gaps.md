@@ -84,3 +84,18 @@ notebook reads.
 **Consequence:** bronze reads the raw JSON bundles from that S3 folder, as the
 listing's own notebook does. The shared catalog is left installed (no cost, no
 data) and is not used by the pipeline.
+
+### D6 — Databricks reads the public S3 source directly (tested 2026-09-29)
+
+One-file test on the SQL warehouse, smallest source file (62 KB):
+- Without options: `CF_FAILED_TO_INFER_SCHEMA` - the reader expects JSON Lines
+  (one record per line); each FHIR file is one multi-line JSON object.
+- With `multiLine => true`: readable. 1 row: `resourceType = Bundle`,
+  `type = transaction`, `size(entry) = 29` - equal to the minimum records per
+  patient the local profile measured (29).
+- Detected columns: `entry` (array of structs holding every record), `resourceType`,
+  `type`, `_rescued_data`.
+- Timings: 16.9 s (first query, includes warehouse start), 10.4 s (second).
+
+**Consequence:** no download or upload is needed. Bronze can read the source with
+`multiLine` JSON, and the full profile can run inside Databricks.

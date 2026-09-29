@@ -44,3 +44,12 @@ The views' own headings (table_name, column_name) are fixed by the SQL standard.
 values come from whoever created the table: our SQL and aliases, or - with Auto Loader -
 the data itself (a JSON key "birthDate" becomes column birthDate). Table names are stored
 lower case; column names keep their case.
+
+### JSON Lines vs multi-line JSON
+Databricks' JSON reader expects one record per line ("JSON Lines"). A FHIR bundle is one
+big object over many lines, so it needs multiLine => true. Like reading a shopping list
+(one item per line) vs a letter (one message across many lines).
+
+### _rescued_data
+A column Databricks adds when reading files: any value that does not fit the detected
+shape is kept there instead of being thrown away. Built-in "nothing silently dropped".
