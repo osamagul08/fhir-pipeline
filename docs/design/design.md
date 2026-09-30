@@ -75,8 +75,17 @@ GOLD     dim_patient, fact_encounter, fact_condition, fact_observation_vitals, f
 **Why VARIANT (new concept):** a column type that stores JSON of *any* shape and
 still lets SQL read fields (`bundle:entry`, `resource:gender::string`). It avoids
 the problem profiling hit: no single guessed schema for 24 record types, so no
-`address`-becomes-text failure. **To confirm with a 1-file test** that the SQL
-warehouse and pipeline accept `parse_json` / `variant_explode`: NOT TESTED yet.
+`address`-becomes-text failure.
+
+**Tested 2026-09-30 on the SQL warehouse**, smallest file (62 KB), read with
+`format => 'text', wholeText => true`:
+- `parse_json` + field access: `Bundle`, `transaction`, 29 records, 62,245 characters.
+- `variant_explode(bundle:entry)`: 29 rows (20 Observation, 2 DiagnosticReport,
+  1 each of 7 more types) - equal to the profile's count for this file.
+- `address[0]:city` on the Patient: `Millis`, state `MA` - no shape conflict.
+- One fix needed: a field taken from a VARIANT is still a VARIANT; `array_size`
+  needs `CAST(bundle:entry AS ARRAY<VARIANT>)`.
+Not yet tested inside the Lakeflow pipeline itself (first build step).
 
 A file that is not valid JSON does not stop the load: it is kept in bronze with
 `bundle = NULL` and goes to quarantine (rule Q1).

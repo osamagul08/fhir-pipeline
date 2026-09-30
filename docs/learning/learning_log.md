@@ -69,3 +69,8 @@ A Databricks column type that stores JSON of any shape and still lets SQL read
 fields inside it (bundle:entry, resource:gender::string). Like a filing box that
 accepts any form, where you can still pull out "the gender line" from each one.
 Useful when 24 record types each have their own shape.
+
+### A field from a VARIANT is still a VARIANT
+bundle:entry gives a VARIANT, not a list, so array_size() refuses it. Say what it is:
+CAST(bundle:entry AS ARRAY<VARIANT>). Like a box inside a box: open it before counting.
+schema_of_variant(x) shows the shape of what is inside.
