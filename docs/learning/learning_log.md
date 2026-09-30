@@ -74,3 +74,40 @@ Useful when 24 record types each have their own shape.
 bundle:entry gives a VARIANT, not a list, so array_size() refuses it. Say what it is:
 CAST(bundle:entry AS ARRAY<VARIANT>). Like a box inside a box: open it before counting.
 schema_of_variant(x) shows the shape of what is inside.
+
+### Serverless compute and the internet
+Serverless jobs may not open ordinary internet connections: a Python requests call to
+a public website was cut off ("Connection reset by peer"). Reading s3:// through Spark
+worked, because that uses Databricks' built-in storage connector. Like an office where
+internal lines work but outside calls are blocked.
+
+### Prove a copy, don't assume it
+After copying, compare the destination with what you expected: file count, names and
+byte sizes. Batch 1 matched the local sample exactly - 52 files, identical sizes.
+
+### Two independent counts agreeing
+The laptop profiler (Python) and the pipeline (Databricks SQL) counted batch 1 separately:
+24 of 24 record types and 29,120 records matched. Two different tools agreeing is much
+stronger proof than one tool checking itself.
+
+### A failed rule can mean the rule is wrong
+"Every location has an identifier" stopped the run on "Patient's Home" - a 'kind' of
+place, not a specific one, so it has nothing to identify. Stop-the-run rules exist to
+catch wrong assumptions before wrong numbers get published: read the record, then fix
+whichever side is wrong - here, the rule.
+
+### Discovery vs triggering
+Auto Loader finds new files by itself (listing the folder, or reading S3 events). What
+you choose is WHEN it runs: a schedule, a file arrival trigger, or continuous. Like a
+mailbox: listing = walking to check it, notification = the postman rings the bell.
+
+### Read the source directly, or copy first?
+Read directly when you own the storage and keep the files. Copy first when the source
+is someone else's or temporary - a full refresh can only reload what still exists.
+Like reading the library's newspaper vs photocopying the article to keep.
+
+### Check a query's total before trusting its details
+A cross-check reported 126 million location links when the profile measured 92,100,
+and links inside records that have none. One impossible number means the whole result
+is wrong - discard it, don't explain it away. Compare every new query's total with a
+number you already know.

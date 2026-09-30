@@ -1,0 +1,20 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/page/2.1.0/schema.json",
+  "name": "b0d7dcbfc540ebee160d",
+  "displayName": "5 Vitals & labs",
+  "displayOption": "FitToWidth",
+  "height": 1240,
+  "width": 1920,
+  "visualInteractions": [
+    {
+      "source": "2a928e30ca3eea1ee206",
+      "target": "ed1896ad73bebf941c1e",
+      "type": "NoFilter"
+    },
+    {
+      "source": "2a928e30ca3eea1ee206",
+      "target": "67f7fe717a5102c6b1b5",
+      "type": "NoFilter"
+    }
+  ]
+}

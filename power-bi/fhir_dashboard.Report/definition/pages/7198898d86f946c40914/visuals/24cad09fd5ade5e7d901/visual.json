@@ -1,0 +1,47 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "24cad09fd5ade5e7d901",
+  "position": {
+    "x": 10,
+    "y": 10,
+    "z": 0,
+    "height": 70,
+    "width": 1480,
+    "tabOrder": 0
+  },
+  "visual": {
+    "visualType": "textbox",
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "paragraphs": [
+              {
+                "textRuns": [
+                  {
+                    "value": "Claims and costs (USD, synthetic prices)",
+                    "textStyle": {
+                      "fontSize": "14pt",
+                      "fontWeight": "bold"
+                    }
+                  }
+                ]
+              },
+              {
+                "textRuns": [
+                  {
+                    "value": "Institutional claims belong to visits; pharmacy claims to prescriptions.  SYNTHETIC data (Synthea): realistic, but not real people or real health statistics.",
+                    "textStyle": {
+                      "fontSize": "14pt"
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

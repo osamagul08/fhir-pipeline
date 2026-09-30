@@ -107,3 +107,114 @@ All 1,156 files profiled on the SQL warehouse, 188.8 s of queries; details in
 `address` shape conflict and its first two results were lost (the script saved
 only at the end, 182.6 s wasted); fixed by saving after every query. Cost of
 both runs: NOT MEASURED (Databricks billing not readable on this trial).
+
+### D8 — Serverless jobs cannot reach the internet; copy through the storage connector
+
+**2026-09-30.** The first run of the copy job used Python `requests` over HTTPS and
+failed at the listing step: `ConnectionError: ('Connection aborted.',
+ConnectionResetError(104, 'Connection reset by peer'))` during the TLS handshake.
+Serverless compute blocks ordinary outbound internet connections. The SQL
+warehouse's `read_files('s3://…')` had worked because it uses Databricks' built-in
+storage connector, not an internet request.
+
+**Fix:** the job lists and reads the files with Spark's `binaryFile` reader on
+`s3://…` (the connector), and writes the bytes into the volume. HTTPS is kept only
+for the laptop's `--plan-only`.
+
+**Batch 1 result** (run `1103733195583338`, 09:16:55 → 09:18:29, TERMINATED SUCCESS):
+52 files, 86.2 MB copied into `/Volumes/fhir/dev_osamagul08_landing/raw_bundles`.
+Checked through the Files API: 52 files; both reference files at the profiled
+sizes; the 50 patient files have the same names and identical byte sizes as the
+locally profiled sample. Cost: NOT MEASURED (Databricks billing not readable).
+
+### D9 — First pipeline run: batch 1 matches the profile exactly (2026-09-30)
+
+Pipeline `fhir_etl` (dev), update `1e997f30-3aef-4409-960a-8f225323389c`, COMPLETED in
+52 s (04:29:53 → 04:30:45; bronze 13 s, silver_entries 6 s, reconciliation 4 s).
+VARIANT (`try_parse_json`, `variant_explode`) works inside the pipeline.
+
+| Check | Result |
+|---|---|
+| Files in bronze | 52 (50 patient, 2 reference), 86,233,610 bytes, 0 unparsed |
+| Records bronze → silver | 29,120 = 29,120 |
+| Per type vs profiles (`sql/databricks/checks/batch1_vs_profile.sql`) | 24 of 24 MATCH |
+| One Patient per patient file | 0 exceptions |
+| Encounter = DocumentReference = ExplanationOfBenefit | 1,713 each |
+| Duplicate record ids (warn-only) | 0 — keep warn until all batches loaded |
+| Records without a patient | 5,507 = the two reference files (2,754 + 2,753) |
+
+Cost: NOT MEASURED (Databricks billing not readable).
+
+### D10 — A FAIL rule caught a wrong assumption: 'kind' locations (2026-09-30)
+
+Second pipeline run (update `9a033f…`) FAILED on `silver_location`, rule `has_key`
+("every location has an identifier"). The record: Location `bb1ad573-…`,
+description "Patient's Home", `mode = kind`, physicalType House, no identifier,
+name or address. In FHIR, `mode = kind` is a TYPE of place, not a specific one -
+so the rule was wrong, not the data. Dependent flows (silver_encounter, quarantine,
+reconciliation) were skipped; 10 other silver tables completed. Nothing
+half-built was published.
+
+**Fix:** rule is now `link_key IS NOT NULL OR mode = 'kind'` (still FAIL UPDATE);
+columns `mode` and `physical_type` added; `name` falls back to `description`.
+
+### D11 — Typed silver tables on batch 1: all match (2026-09-30)
+
+Update `d65691c3-c381-46b7-b582-222121737af6`, COMPLETED, 30 s of running.
+- 11 of 11 typed tables equal the profile (Patient 50, Encounter 1,713, Condition
+  1,516, Procedure 2,393, Immunization 389, MedicationRequest 1,280, Observation
+  6,257, Claim 2,993, Practitioner 1,377, Organization 1,376, Location 1,377).
+- Gate: `typed_rows_missing = 0`, `duplicate_resource_ids = 0`, 29,120 = 29,120.
+- Observation value shapes equal the laptop profile: quantity 5,387, component 474,
+  code 366, text 30. Components: 4,539 rows from 474 observations.
+- Encounters with no start / class / doctor / organisation: 0 each.
+- Quarantine: 3 rows, all Q3 Encounter location. All 3 point to identifier
+  `bb1ad573-…`, which is the **id** of the 'kind' location "Patient's Home" - a
+  location with no identifier. The links are home visits, not broken links.
+  Proposed: match on id when the identifier finds nothing, recorded in a
+  `location_match` column. Whether the full data's 246 unmatched Location links
+  are the same case: NOT MEASURED until all batches are loaded.
+
+### D12 — Two rule changes after batch 1 (agreed 2026-09-30)
+
+1. **Location links match on identifier, then on id.** 'Kind' locations ("Patient's
+   Home") have no identifier; Synthea puts their id in the link. `silver_encounter`
+   records how each matched in `location_match` (identifier / id / NULL); only
+   links that match neither way go to quarantine.
+2. **Duplicate record ids now stop the run** (was warn-only; batch 1 measured 0).
+
+**Operating rule - the landing folder is write-once.** Auto Loader remembers file
+PATHS, not contents: a renamed file loads again (duplicates - now caught by rule 2),
+an overwritten file is ignored (the change is silently missed), a deleted file
+leaves its rows in bronze, and a redeploy reloads nothing. To correct data: add it
+as a new file, or run a pipeline full refresh. Never rename or overwrite in place.
+
+### D13 — All 1,156 files loaded in 5 batches: full data matches the full profile (2026-09-30)
+
+| Batch | Files | Copy | Pipeline (running time) |
+|---|---|---|---|
+| 1 | 52 (86.2 MB) | 88 s | 52 s |
+| 2 | 276 (598.6 MB) | 167 s | 2 min 11 s |
+| 3 | 276 (452.5 MB) | NOT MEASURED separately | 1 min 54 s |
+| 4 | 276 (425.4 MB) | NOT MEASURED separately | 1 min 57 s |
+| 5 | 276 (515.7 MB) | NOT MEASURED separately | 1 min 47 s |
+
+Pipeline time follows the NEW files, not the total: Auto Loader loaded only each
+batch's files (bronze grew 52 → 328 → … → 1,156, never reloading).
+
+Final gate: 1,156 files, 631,630 records = 631,630 silver rows; 24 of 24 types equal
+`docs/profiles/full_1156.json`; patients 514 / 486 / 86 / 68 (female alive, male
+alive, male deceased, female deceased), all MA; Encounter = DocumentReference =
+ExplanationOfBenefit = 46,050; duplicates 0; flattening losses 0; quarantine 0.
+
+Location links: visits 45,927 matched by identifier + 123 by id ("Patient's Home");
+procedures 13 by id. Of the full profile's 246 unmatched links, 136 are these; the
+other 110 sit in record types not yet typed (claims, reports, ...): whether they
+are also home visits is NOT MEASURED. It will be answered when those types are
+typed (wave 2) and go through the same matching and quarantine rules.
+
+An ad-hoc cross-check (regexp over `to_json(VARIANT)` in `silver_entries`) gave
+impossible results twice - 126,806,252 links vs the profile's 92,100, and Location
+links inside Patient records, which have none - so it was discarded, not reported.
+Cause not found; not used anywhere in the pipeline. Lesson: sanity-check a query's
+total against a known number before reading its breakdown.

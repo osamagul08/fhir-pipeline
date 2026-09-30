@@ -1,0 +1,19 @@
+table Years
+
+	column Year
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: Year
+
+	partition Years = m
+		mode: import
+		source =
+				let
+				    // Every year that appears in the data, 1920-2022.
+				    Source = Table.FromList({1920..2022}, Splitter.SplitByNothing(), {"Year"}),
+				    Typed = Table.TransformColumnTypes(Source, {{"Year", Int64.Type}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

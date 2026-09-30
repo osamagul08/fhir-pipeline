@@ -1,0 +1,57 @@
+table Claims
+
+	measure 'Claim amount USD' =
+			SUM ( Claims[amount_usd] )
+		formatString: $#,0
+
+	measure Claims =
+			COUNTROWS ( Claims )
+		formatString: #,0
+
+	column claim_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: claim_id
+
+	column patient_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: patient_id
+
+	column claim_type
+		dataType: string
+		summarizeBy: none
+		sourceColumn: claim_type
+
+	column amount_usd
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: sum
+		sourceColumn: amount_usd
+
+	column billed_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: billed_date
+
+	column billed_year
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: billed_year
+
+	partition Claims = m
+		mode: import
+		source =
+				let
+				    Source = DatabricksMultiCloud.Catalogs("dbc-b66dca1a-d331.cloud.databricks.com", "/sql/1.0/warehouses/87abf2d5aeeae691", null),
+				    Catalog = Source{[Name = "fhir", Kind = "Database"]}[Data],
+				    Schema = Catalog{[Name = "dev_osamagul08_fhir_etl", Kind = "Schema"]}[Data],
+				    Data = Schema{[Name = "gold_fact_claim", Kind = "View"]}[Data],
+				    Kept = Table.SelectColumns(Data, {"claim_id", "patient_id", "claim_type", "amount_usd", "billed_date", "billed_year"}),
+				    Typed = Table.TransformColumnTypes(Kept, {{"claim_id", type text}, {"patient_id", type text}, {"claim_type", type text}, {"amount_usd", type number}, {"billed_date", type datetime}, {"billed_year", Int64.Type}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

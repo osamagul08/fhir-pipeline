@@ -1,0 +1,56 @@
+table Medications
+
+	measure Prescriptions =
+			COUNTROWS ( Medications )
+		formatString: #,0
+
+	measure 'Patients prescribed' =
+			DISTINCTCOUNT ( Medications[patient_id] )
+		formatString: #,0
+
+	column medication_request_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: medication_request_id
+
+	column patient_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: patient_id
+
+	column status
+		dataType: string
+		summarizeBy: none
+		sourceColumn: status
+
+	column medicine
+		dataType: string
+		summarizeBy: none
+		sourceColumn: medicine
+
+	column prescribed_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: prescribed_date
+
+	column prescribed_year
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: prescribed_year
+
+	partition Medications = m
+		mode: import
+		source =
+				let
+				    Source = DatabricksMultiCloud.Catalogs("dbc-b66dca1a-d331.cloud.databricks.com", "/sql/1.0/warehouses/87abf2d5aeeae691", null),
+				    Catalog = Source{[Name = "fhir", Kind = "Database"]}[Data],
+				    Schema = Catalog{[Name = "dev_osamagul08_fhir_etl", Kind = "Schema"]}[Data],
+				    Data = Schema{[Name = "gold_fact_medication", Kind = "View"]}[Data],
+				    Kept = Table.SelectColumns(Data, {"medication_request_id", "patient_id", "status", "medicine", "prescribed_date", "prescribed_year"}),
+				    Typed = Table.TransformColumnTypes(Kept, {{"medication_request_id", type text}, {"patient_id", type text}, {"status", type text}, {"medicine", type text}, {"prescribed_date", type datetime}, {"prescribed_year", Int64.Type}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,137 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "195a108c05d16fd26b1b",
+  "position": {
+    "x": 960,
+    "y": 230,
+    "z": 7,
+    "height": 330,
+    "width": 950,
+    "tabOrder": 7
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Loads"
+                    }
+                  },
+                  "Property": "loaded_at"
+                }
+              },
+              "queryRef": "Loads.loaded_at",
+              "nativeQueryRef": "loaded_at"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Loads"
+                    }
+                  },
+                  "Property": "files"
+                }
+              },
+              "queryRef": "Loads.files",
+              "nativeQueryRef": "files"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Loads"
+                    }
+                  },
+                  "Property": "records"
+                }
+              },
+              "queryRef": "Loads.records",
+              "nativeQueryRef": "records"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Loads"
+                    }
+                  },
+                  "Property": "megabytes"
+                }
+              },
+              "queryRef": "Loads.megabytes",
+              "nativeQueryRef": "megabytes"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Each Auto Loader load'"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "subTitle": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Each batch loaded once; earlier files never reloaded.'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

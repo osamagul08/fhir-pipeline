@@ -1,0 +1,30 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	valueFilterBehavior: independent
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation __PBI_TimeIntelligenceEnabled = 0
+
+annotation PBI_QueryOrder = ["Patients","Visits","Conditions","Medications","Procedures","Vaccines","Vitals","Claims","Organizations","Record types","Loads","Gate","Years"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Patients
+ref table Visits
+ref table Conditions
+ref table Medications
+ref table Procedures
+ref table Vaccines
+ref table Vitals
+ref table Claims
+ref table Organizations
+ref table 'Record types'
+ref table Loads
+ref table Gate
+ref table Years
+
+ref cultureInfo en-US

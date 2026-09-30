@@ -1,0 +1,47 @@
+table Vaccines
+
+	measure 'Vaccines given' =
+			COUNTROWS ( Vaccines )
+		formatString: #,0
+
+	column immunization_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: immunization_id
+
+	column patient_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: patient_id
+
+	column vaccine
+		dataType: string
+		summarizeBy: none
+		sourceColumn: vaccine
+
+	column vaccine_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: vaccine_date
+
+	column vaccine_year
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: vaccine_year
+
+	partition Vaccines = m
+		mode: import
+		source =
+				let
+				    Source = DatabricksMultiCloud.Catalogs("dbc-b66dca1a-d331.cloud.databricks.com", "/sql/1.0/warehouses/87abf2d5aeeae691", null),
+				    Catalog = Source{[Name = "fhir", Kind = "Database"]}[Data],
+				    Schema = Catalog{[Name = "dev_osamagul08_fhir_etl", Kind = "Schema"]}[Data],
+				    Data = Schema{[Name = "gold_fact_immunization", Kind = "View"]}[Data],
+				    Kept = Table.SelectColumns(Data, {"immunization_id", "patient_id", "vaccine", "vaccine_date", "vaccine_year"}),
+				    Typed = Table.TransformColumnTypes(Kept, {{"immunization_id", type text}, {"patient_id", type text}, {"vaccine", type text}, {"vaccine_date", type datetime}, {"vaccine_year", Int64.Type}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

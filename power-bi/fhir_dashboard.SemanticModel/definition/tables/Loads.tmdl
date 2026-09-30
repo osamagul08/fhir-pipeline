@@ -1,0 +1,44 @@
+table Loads
+
+	measure 'Files loaded' =
+			SUM ( Loads[files] )
+		formatString: #,0
+
+	column loaded_at
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: loaded_at
+
+	column files
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: files
+
+	column records
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: records
+
+	column megabytes
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: sum
+		sourceColumn: megabytes
+
+	partition Loads = m
+		mode: import
+		source =
+				let
+				    Source = DatabricksMultiCloud.Catalogs("dbc-b66dca1a-d331.cloud.databricks.com", "/sql/1.0/warehouses/87abf2d5aeeae691", null),
+				    Catalog = Source{[Name = "fhir", Kind = "Database"]}[Data],
+				    Schema = Catalog{[Name = "dev_osamagul08_fhir_etl", Kind = "Schema"]}[Data],
+				    Data = Schema{[Name = "gold_pipeline_loads", Kind = "View"]}[Data],
+				    Kept = Table.SelectColumns(Data, {"loaded_at", "files", "records", "megabytes"}),
+				    Typed = Table.TransformColumnTypes(Kept, {{"loaded_at", type datetime}, {"files", Int64.Type}, {"records", Int64.Type}, {"megabytes", type number}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

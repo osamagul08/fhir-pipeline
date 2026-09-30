@@ -1,0 +1,131 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.13.0/schema.json",
+  "name": "67f7fe717a5102c6b1b5",
+  "position": {
+    "x": 960,
+    "y": 640,
+    "z": 5,
+    "height": 580,
+    "width": 950,
+    "tabOrder": 5
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Vitals"
+                    }
+                  },
+                  "Property": "measure_group"
+                }
+              },
+              "queryRef": "Vitals.measure_group",
+              "nativeQueryRef": "measure_group"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Vitals"
+                    }
+                  },
+                  "Property": "measure"
+                }
+              },
+              "queryRef": "Vitals.measure",
+              "nativeQueryRef": "measure"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Vitals"
+                    }
+                  },
+                  "Property": "unit"
+                }
+              },
+              "queryRef": "Vitals.unit",
+              "nativeQueryRef": "unit"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Vitals"
+                    }
+                  },
+                  "Property": "Readings"
+                }
+              },
+              "queryRef": "Vitals.Readings",
+              "nativeQueryRef": "Readings"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Vitals"
+                    }
+                  },
+                  "Property": "Average value"
+                }
+              },
+              "queryRef": "Vitals.Average value",
+              "nativeQueryRef": "Average value"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "total": [
+        {
+          "properties": {
+            "totals": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Every measure: readings and overall average'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

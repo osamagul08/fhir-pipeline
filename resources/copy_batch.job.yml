@@ -1,0 +1,45 @@
+# ===========================================================================
+# JOB copy_batch - copy one batch of FHIR files into the landing volume.
+#
+#   databricks bundle run copy_batch --target dev --profile trial                   # batch 1
+#   databricks bundle run copy_batch --target dev --profile trial --params batch=2  # batch 2
+#
+# Runs src/landing/copy_batch.py on serverless compute (no cluster to manage).
+# Copying the same batch twice is safe: files already there are skipped.
+# ===========================================================================
+resources:
+  jobs:
+    copy_batch:
+      name: fhir_copy_batch
+
+      # Which batch to copy. 1 = the 50 sampled patients + 2 reference files.
+      parameters:
+        - name: batch
+          default: "1"
+
+      max_concurrent_runs: 1        # two copies at once could race on the same files
+      timeout_seconds: 3600
+
+      email_notifications:
+        on_failure:
+          - ${workspace.current_user.userName}
+
+      tasks:
+        - task_key: copy
+          environment_key: default
+          spark_python_task:
+            python_file: ../src/landing/copy_batch.py
+            parameters:
+              - "--batch"
+              - "{{job.parameters.batch}}"
+              - "--target"
+              # The volume's folder path; in dev the schema name has the dev prefix.
+              - "/Volumes/${var.catalog}/${resources.schemas.landing_schema.name}/raw_bundles"
+
+      # Serverless Python environment. `requests` downloads the files over HTTPS.
+      environments:
+        - environment_key: default
+          spec:
+            client: "2"
+            dependencies:
+              - requests

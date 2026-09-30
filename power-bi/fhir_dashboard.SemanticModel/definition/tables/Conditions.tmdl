@@ -1,0 +1,70 @@
+table Conditions
+
+	measure Diagnoses =
+			COUNTROWS ( Conditions )
+		formatString: #,0
+
+	measure 'Patients affected' =
+			DISTINCTCOUNT ( Conditions[patient_id] )
+		formatString: #,0
+
+	measure 'Clinical diagnoses' =
+			CALCULATE ( [Diagnoses], Conditions[condition_kind] = "Clinical condition" )
+		formatString: #,0
+
+	column condition_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: condition_id
+
+	column patient_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: patient_id
+
+	column condition_kind
+		dataType: string
+		summarizeBy: none
+		sourceColumn: condition_kind
+
+	column condition
+		dataType: string
+		summarizeBy: none
+		sourceColumn: condition
+
+	column clinical_status
+		dataType: string
+		summarizeBy: none
+		sourceColumn: clinical_status
+
+	column onset_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: onset_date
+
+	column onset_year
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: onset_year
+
+	column is_ongoing
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: is_ongoing
+
+	partition Conditions = m
+		mode: import
+		source =
+				let
+				    Source = DatabricksMultiCloud.Catalogs("dbc-b66dca1a-d331.cloud.databricks.com", "/sql/1.0/warehouses/87abf2d5aeeae691", null),
+				    Catalog = Source{[Name = "fhir", Kind = "Database"]}[Data],
+				    Schema = Catalog{[Name = "dev_osamagul08_fhir_etl", Kind = "Schema"]}[Data],
+				    Data = Schema{[Name = "gold_fact_condition", Kind = "View"]}[Data],
+				    Kept = Table.SelectColumns(Data, {"condition_id", "patient_id", "condition_kind", "condition", "clinical_status", "onset_date", "onset_year", "is_ongoing"}),
+				    Typed = Table.TransformColumnTypes(Kept, {{"condition_id", type text}, {"patient_id", type text}, {"condition_kind", type text}, {"condition", type text}, {"clinical_status", type text}, {"onset_date", type datetime}, {"onset_year", Int64.Type}, {"is_ongoing", type logical}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,33 @@
+# ===========================================================================
+# Where things live: two schemas and one volume inside the `fhir` catalog.
+#
+#   fhir.landing              raw files, exactly as copied from the source
+#     └ raw_bundles (volume)  one JSON file per patient + 2 reference files
+#   fhir.fhir_etl             every table the pipeline builds (bronze, silver, gold)
+#
+# In dev, Databricks prefixes the schema names (dev_<you>_landing), so dev and
+# prod never share data. The bundle creates all three on deploy.
+#
+# Keys (landing_schema, etl_schema, raw_bundles) are the bundle's own handles and
+# must be unique across the whole bundle; the `name` is what Databricks shows.
+# ===========================================================================
+resources:
+  schemas:
+    landing_schema:
+      catalog_name: ${var.catalog}
+      name: landing
+      comment: Raw FHIR bundles as received. Read only by the pipeline's Auto Loader.
+
+    etl_schema:
+      catalog_name: ${var.catalog}
+      name: fhir_etl
+      comment: Pipeline tables - bronze (files), silver (records), gold (analysis). Data is SYNTHETIC.
+
+  volumes:
+    # A volume is a governed folder for files, not a table.
+    raw_bundles:
+      catalog_name: ${var.catalog}
+      schema_name: ${resources.schemas.landing_schema.name}
+      name: raw_bundles
+      volume_type: MANAGED
+      comment: Synthea FHIR R4 JSON bundles, copied in batches by the copy_batch job.

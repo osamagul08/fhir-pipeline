@@ -1,0 +1,70 @@
+table Gate
+
+	measure 'Quarantined issues' =
+			SUM ( Gate[quarantined_issues] )
+		formatString: #,0
+
+	measure 'Duplicate ids' =
+			SUM ( Gate[duplicate_resource_ids] )
+		formatString: #,0
+
+	measure 'Records lost in flattening' =
+			SUM ( Gate[typed_rows_missing] )
+		formatString: #,0
+
+	column files_in_bronze
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: files_in_bronze
+
+	column records_in_bronze
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: records_in_bronze
+
+	column rows_in_silver
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: rows_in_silver
+
+	column duplicate_resource_ids
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: duplicate_resource_ids
+
+	column typed_rows_missing
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: typed_rows_missing
+
+	column quarantined_issues
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: quarantined_issues
+
+	column files_not_bundles
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: files_not_bundles
+
+	partition Gate = m
+		mode: import
+		source =
+				let
+				    Source = DatabricksMultiCloud.Catalogs("dbc-b66dca1a-d331.cloud.databricks.com", "/sql/1.0/warehouses/87abf2d5aeeae691", null),
+				    Catalog = Source{[Name = "fhir", Kind = "Database"]}[Data],
+				    Schema = Catalog{[Name = "dev_osamagul08_fhir_etl", Kind = "Schema"]}[Data],
+				    Data = Schema{[Name = "reconciliation", Kind = "View"]}[Data],
+				    Kept = Table.SelectColumns(Data, {"files_in_bronze", "records_in_bronze", "rows_in_silver", "duplicate_resource_ids", "typed_rows_missing", "quarantined_issues", "files_not_bundles"}),
+				    Typed = Table.TransformColumnTypes(Kept, {{"files_in_bronze", Int64.Type}, {"records_in_bronze", Int64.Type}, {"rows_in_silver", Int64.Type}, {"duplicate_resource_ids", Int64.Type}, {"typed_rows_missing", Int64.Type}, {"quarantined_issues", Int64.Type}, {"files_not_bundles", Int64.Type}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

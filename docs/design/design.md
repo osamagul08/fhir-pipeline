@@ -225,6 +225,39 @@ Re-use the BRFSS patterns that already work:
 
 ---
 
+## 8b. Production options (questions answered 2026-09-30)
+
+**How Auto Loader finds new files (discovery):**
+- *Directory listing* (default, used here): lists the folder, loads paths it has
+  not seen. Fine up to thousands of files per run.
+- *File notification*: the bucket sends an event per new file to a queue;
+  Auto Loader reads the queue. For millions of files. Needs event setup on a
+  bucket you own.
+
+**What starts it (triggering):** a Job **schedule** (known rhythm), a **file
+arrival trigger** (starts the Job when files land at unknown times - the usual
+best fit), or **continuous** mode (seconds of delay, bills around the clock).
+No separate "watcher" job is needed.
+
+**Read the source directly, or copy first?**
+
+| | Read S3 directly | Copy to our landing first (this project) |
+|---|---|---|
+| Steps / storage | 1 step, stored once | 2 steps, stored twice |
+| Source deletes or changes files | a full refresh cannot reload them | our copy still has them |
+| Retention controlled by | the source owner | us |
+| Batching / replay for tests | hard | easy |
+
+Bronze keeps each file's `raw_text`, so evidence survives either way - until a
+full refresh, which re-reads the source.
+
+**Recommendation for a real feed:** own S3 bucket, registered in Unity Catalog as
+an external location (or external volume), Auto Loader reading it directly, the
+Job started by a file arrival trigger. Copy-first only when the source is not
+ours or not kept (partner bucket, SFTP that deletes after N days, an API).
+**This project copies** because the source is Databricks' public bucket (not
+ours) and static (batches simulate arrivals).
+
 ## 9. Out of scope for now
 
 - Snowflake (D1). OMOP mapping (the listing notebook's last step): later, optional.

@@ -1,0 +1,62 @@
+table Vitals
+
+	measure Readings =
+			COUNTROWS ( Vitals )
+		formatString: #,0
+
+	measure 'Average value' =
+			IF ( HASONEVALUE ( Vitals[measure] ), AVERAGE ( Vitals[value] ) )
+		formatString: #,0.0
+
+	column patient_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: patient_id
+
+	column measure
+		dataType: string
+		summarizeBy: none
+		sourceColumn: measure
+
+	column measure_group
+		dataType: string
+		summarizeBy: none
+		sourceColumn: measure_group
+
+	column value
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: none
+		sourceColumn: value
+
+	column unit
+		dataType: string
+		summarizeBy: none
+		sourceColumn: unit
+
+	column measured_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: measured_date
+
+	column measured_year
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: measured_year
+
+	partition Vitals = m
+		mode: import
+		source =
+				let
+				    Source = DatabricksMultiCloud.Catalogs("dbc-b66dca1a-d331.cloud.databricks.com", "/sql/1.0/warehouses/87abf2d5aeeae691", null),
+				    Catalog = Source{[Name = "fhir", Kind = "Database"]}[Data],
+				    Schema = Catalog{[Name = "dev_osamagul08_fhir_etl", Kind = "Schema"]}[Data],
+				    Data = Schema{[Name = "gold_fact_vitals", Kind = "View"]}[Data],
+				    Kept = Table.SelectColumns(Data, {"patient_id", "measure", "measure_group", "value", "unit", "measured_date", "measured_year"}),
+				    Typed = Table.TransformColumnTypes(Kept, {{"patient_id", type text}, {"measure", type text}, {"measure_group", type text}, {"value", type number}, {"unit", type text}, {"measured_date", type datetime}, {"measured_year", Int64.Type}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

@@ -1,0 +1,60 @@
+relationship dc38b79d-93e2-56d7-b603-5d5fb1354c8d
+	fromColumn: Visits.patient_id
+	toColumn: Patients.patient_id
+
+relationship 4297d6c4-2b29-5575-b867-514111645190
+	fromColumn: Conditions.patient_id
+	toColumn: Patients.patient_id
+
+relationship 7e48a318-6413-58f3-ad78-d8bbfd06108a
+	fromColumn: Medications.patient_id
+	toColumn: Patients.patient_id
+
+relationship 41543840-af28-542c-9e33-2b13a23eb6ba
+	fromColumn: Procedures.patient_id
+	toColumn: Patients.patient_id
+
+relationship a3b82770-76e9-597a-ba66-be785aca47b9
+	fromColumn: Vaccines.patient_id
+	toColumn: Patients.patient_id
+
+relationship e9a3aa99-91f5-5ca1-ab56-6fef1094b296
+	fromColumn: Vitals.patient_id
+	toColumn: Patients.patient_id
+
+relationship dc856a62-97fe-534b-b0f7-bf63019b7bb3
+	fromColumn: Claims.patient_id
+	toColumn: Patients.patient_id
+
+relationship e87dd592-d51e-5629-81fd-260f322b029d
+	fromColumn: Visits.organization_id
+	toColumn: Organizations.organization_id
+
+relationship a5294825-e112-5895-8696-88fe96720195
+	fromColumn: Visits.visit_year
+	toColumn: Years.Year
+
+relationship afa74fe5-cc35-50d1-9e58-8928a76b5b70
+	fromColumn: Conditions.onset_year
+	toColumn: Years.Year
+
+relationship e68ea14b-ff3a-57ed-89c2-89f316606e01
+	fromColumn: Medications.prescribed_year
+	toColumn: Years.Year
+
+relationship baa426ba-4e2a-51c2-aae6-8fd12b81e291
+	fromColumn: Procedures.performed_year
+	toColumn: Years.Year
+
+relationship 2c782dd3-3508-550f-bdde-56ba34bf978e
+	fromColumn: Vaccines.vaccine_year
+	toColumn: Years.Year
+
+relationship 4c87fde0-4ea0-557d-aa24-453b6b036dd2
+	fromColumn: Vitals.measured_year
+	toColumn: Years.Year
+
+relationship 6d7a118e-66e3-5bc2-b07b-6178c62eaf6f
+	fromColumn: Claims.billed_year
+	toColumn: Years.Year
+

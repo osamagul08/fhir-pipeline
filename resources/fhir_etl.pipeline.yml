@@ -1,0 +1,42 @@
+# ===========================================================================
+# THE ETL PIPELINE - a Lakeflow Declarative Pipeline. It turns the raw FHIR
+# files in the landing volume into tables: bronze (files) -> silver (records).
+#
+# Databricks reads the SQL files in src/pipelines/fhir_etl/, sees which table
+# reads from which, and works out the order itself.
+#
+#     databricks bundle run fhir_etl --target dev --profile trial
+#
+# Same settings as the BRFSS pipeline, which ran in production.
+# ===========================================================================
+resources:
+  pipelines:
+    fhir_etl:
+      name: fhir_etl
+
+      # Where every table is published (dev adds the dev_<you>_ prefix).
+      catalog: ${var.catalog}
+      schema: ${resources.schemas.etl_schema.name}
+
+      # Serverless: Databricks provides and removes the compute itself.
+      serverless: true
+
+      # Triggered, not continuous: each run processes what is new, then stops
+      # and stops billing. No spend ceiling on this trial.
+      continuous: false
+
+      # Values the SQL reads as ${name}: where Auto Loader finds the files.
+      configuration:
+        landing_path: /Volumes/${var.catalog}/${resources.schemas.landing_schema.name}/raw_bundles/
+
+      # Every .sql file in this folder is part of the pipeline; order does not matter.
+      libraries:
+        - glob:
+            include: ../src/pipelines/fhir_etl/**
+
+      notifications:
+        - email_recipients:
+            - ${workspace.current_user.userName}
+          alerts:
+            - on-update-failure
+            - on-update-fatal-failure

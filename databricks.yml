@@ -1,0 +1,57 @@
+# ===========================================================================
+# DATABRICKS ASSET BUNDLE - this project's Databricks setup, described as code.
+#
+# This file + resources/*.yml tell Databricks what to create. Nothing is
+# clicked together by hand, so everything is versioned and reviewable in git.
+#
+#     databricks bundle validate --strict --target dev --profile trial   # check, changes nothing
+#     databricks bundle deploy   --target dev --profile trial            # create / update
+#     databricks bundle run copy_batch --target dev --profile trial      # run the copy job
+#
+# Same pattern as the BRFSS project (osamagul08/data-eng, tag v1.0).
+# ===========================================================================
+
+bundle:
+  name: fhir_pipeline
+
+# One resource per file keeps each one easy to find and review.
+include:
+  - resources/*.yml
+
+# What goes up to the workspace: only code. Docs, local data and tools stay here.
+sync:
+  exclude:
+    - docs/**
+    - data/**
+    - scripts/**
+
+# Values the resources refer to as ${var.name}, so each is set in one place.
+variables:
+  catalog:
+    description: Unity Catalog catalog everything lives in.
+    default: fhir
+
+  warehouse_id:
+    description: SQL warehouse for SQL tasks.
+    # Found by NAME at deploy time, so no long id is hard-coded.
+    lookup:
+      warehouse: "Serverless Starter Warehouse"
+
+# A target is an environment to deploy into.
+targets:
+  dev:
+    default: true
+    # Development mode: names get a "[dev <you>]" / "dev_<you>_" prefix and
+    # schedules are paused, so a test deployment never touches prod and never
+    # runs on its own (no spend ceiling on this trial).
+    mode: development
+    workspace:
+      profile: trial
+
+  prod:
+    mode: production
+    workspace:
+      profile: trial
+      # Deployed code in a folder only the deployer can write to - not
+      # /Workspace/Shared, which every user could edit (found on BRFSS).
+      root_path: /Workspace/Users/${workspace.current_user.userName}/.bundle/${bundle.name}/${bundle.target}

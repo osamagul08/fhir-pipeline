@@ -1,0 +1,93 @@
+table Patients
+
+	measure Patients =
+			DISTINCTCOUNT ( Patients[patient_id] )
+		formatString: #,0
+
+	measure Alive =
+			CALCULATE ( [Patients], Patients[vital_status] = "Alive" )
+		formatString: #,0
+
+	measure Deceased =
+			CALCULATE ( [Patients], Patients[vital_status] = "Deceased" )
+		formatString: #,0
+
+	measure 'Average age' =
+			AVERAGE ( Patients[age_years] )
+		formatString: 0.0
+
+	column patient_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: patient_id
+
+	column gender
+		dataType: string
+		summarizeBy: none
+		sourceColumn: gender
+
+	column birth_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: birth_date
+
+	column is_deceased
+		dataType: boolean
+		summarizeBy: none
+		sourceColumn: is_deceased
+
+	column vital_status
+		dataType: string
+		summarizeBy: none
+		sourceColumn: vital_status
+
+	column death_year
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: death_year
+
+	column age_years
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: age_years
+
+	column age_band
+		dataType: string
+		sortByColumn: age_band_order
+		summarizeBy: none
+		sourceColumn: age_band
+
+	column marital_status
+		dataType: string
+		summarizeBy: none
+		sourceColumn: marital_status
+
+	column city
+		dataType: string
+		summarizeBy: none
+		sourceColumn: city
+
+	column age_band_order
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: age_band_order
+
+	partition Patients = m
+		mode: import
+		source =
+				let
+				    Source = DatabricksMultiCloud.Catalogs("dbc-b66dca1a-d331.cloud.databricks.com", "/sql/1.0/warehouses/87abf2d5aeeae691", null),
+				    Catalog = Source{[Name = "fhir", Kind = "Database"]}[Data],
+				    Schema = Catalog{[Name = "dev_osamagul08_fhir_etl", Kind = "Schema"]}[Data],
+				    Data = Schema{[Name = "gold_dim_patient", Kind = "View"]}[Data],
+				    Kept = Table.SelectColumns(Data, {"patient_id", "gender", "birth_date", "is_deceased", "vital_status", "death_year", "age_years", "age_band", "marital_status", "city"}),
+				    Typed = Table.TransformColumnTypes(Kept, {{"patient_id", type text}, {"gender", type text}, {"birth_date", type datetime}, {"is_deceased", type logical}, {"vital_status", type text}, {"death_year", Int64.Type}, {"age_years", Int64.Type}, {"age_band", type text}, {"marital_status", type text}, {"city", type text}}),
+				    Ordered = Table.AddColumn(Typed, "age_band_order", each if [age_band] = "80+" then 80 else Number.From(Text.BeforeDelimiter([age_band], "-")), Int64.Type)
+				in
+				    Ordered
+
+	annotation PBI_ResultType = Table

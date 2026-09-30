@@ -1,0 +1,37 @@
+table 'Record types'
+
+	measure 'Records loaded' =
+			SUM ( 'Record types'[records] )
+		formatString: #,0
+
+	column resource_type
+		dataType: string
+		summarizeBy: none
+		sourceColumn: resource_type
+
+	column records
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: records
+
+	column files
+		dataType: int64
+		formatString: 0
+		summarizeBy: sum
+		sourceColumn: files
+
+	partition 'Record types' = m
+		mode: import
+		source =
+				let
+				    Source = DatabricksMultiCloud.Catalogs("dbc-b66dca1a-d331.cloud.databricks.com", "/sql/1.0/warehouses/87abf2d5aeeae691", null),
+				    Catalog = Source{[Name = "fhir", Kind = "Database"]}[Data],
+				    Schema = Catalog{[Name = "dev_osamagul08_fhir_etl", Kind = "Schema"]}[Data],
+				    Data = Schema{[Name = "gold_pipeline_records", Kind = "View"]}[Data],
+				    Kept = Table.SelectColumns(Data, {"resource_type", "records", "files"}),
+				    Typed = Table.TransformColumnTypes(Kept, {{"resource_type", type text}, {"records", Int64.Type}, {"files", Int64.Type}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

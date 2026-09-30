@@ -1,0 +1,95 @@
+table Visits
+
+	measure Visits =
+			COUNTROWS ( Visits )
+		formatString: #,0
+
+	measure 'Patients with visits' =
+			DISTINCTCOUNT ( Visits[patient_id] )
+		formatString: #,0
+
+	measure 'Average visit minutes' =
+			AVERAGE ( Visits[duration_minutes] )
+		formatString: #,0.0
+
+	measure 'Visit cost USD' =
+			SUM ( Visits[claim_cost_usd] )
+		formatString: $#,0
+
+	measure 'Average cost per visit' =
+			AVERAGE ( Visits[claim_cost_usd] )
+		formatString: $#,0
+
+	column encounter_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: encounter_id
+
+	column patient_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: patient_id
+
+	column visit_class
+		dataType: string
+		summarizeBy: none
+		sourceColumn: visit_class
+
+	column visit_type
+		dataType: string
+		summarizeBy: none
+		sourceColumn: visit_type
+
+	column reason_text
+		dataType: string
+		summarizeBy: none
+		sourceColumn: reason_text
+
+	column visit_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: visit_date
+
+	column visit_year
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: visit_year
+
+	column duration_minutes
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: none
+		sourceColumn: duration_minutes
+
+	column organization_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: organization_id
+
+	column location_match
+		dataType: string
+		summarizeBy: none
+		sourceColumn: location_match
+
+	column claim_cost_usd
+		dataType: double
+		formatString: #,0.0
+		summarizeBy: sum
+		sourceColumn: claim_cost_usd
+
+	partition Visits = m
+		mode: import
+		source =
+				let
+				    Source = DatabricksMultiCloud.Catalogs("dbc-b66dca1a-d331.cloud.databricks.com", "/sql/1.0/warehouses/87abf2d5aeeae691", null),
+				    Catalog = Source{[Name = "fhir", Kind = "Database"]}[Data],
+				    Schema = Catalog{[Name = "dev_osamagul08_fhir_etl", Kind = "Schema"]}[Data],
+				    Data = Schema{[Name = "gold_fact_encounter", Kind = "View"]}[Data],
+				    Kept = Table.SelectColumns(Data, {"encounter_id", "patient_id", "visit_class", "visit_type", "reason_text", "visit_date", "visit_year", "duration_minutes", "organization_id", "location_match", "claim_cost_usd"}),
+				    Typed = Table.TransformColumnTypes(Kept, {{"encounter_id", type text}, {"patient_id", type text}, {"visit_class", type text}, {"visit_type", type text}, {"reason_text", type text}, {"visit_date", type datetime}, {"visit_year", Int64.Type}, {"duration_minutes", type number}, {"organization_id", type text}, {"location_match", type text}, {"claim_cost_usd", type number}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table

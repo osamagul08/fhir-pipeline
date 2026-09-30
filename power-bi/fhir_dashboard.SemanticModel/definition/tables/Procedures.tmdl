@@ -1,0 +1,47 @@
+table Procedures
+
+	measure 'Procedures done' =
+			COUNTROWS ( Procedures )
+		formatString: #,0
+
+	column procedure_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: procedure_id
+
+	column patient_id
+		dataType: string
+		summarizeBy: none
+		sourceColumn: patient_id
+
+	column procedure
+		dataType: string
+		summarizeBy: none
+		sourceColumn: procedure
+
+	column performed_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		summarizeBy: none
+		sourceColumn: performed_date
+
+	column performed_year
+		dataType: int64
+		formatString: 0
+		summarizeBy: none
+		sourceColumn: performed_year
+
+	partition Procedures = m
+		mode: import
+		source =
+				let
+				    Source = DatabricksMultiCloud.Catalogs("dbc-b66dca1a-d331.cloud.databricks.com", "/sql/1.0/warehouses/87abf2d5aeeae691", null),
+				    Catalog = Source{[Name = "fhir", Kind = "Database"]}[Data],
+				    Schema = Catalog{[Name = "dev_osamagul08_fhir_etl", Kind = "Schema"]}[Data],
+				    Data = Schema{[Name = "gold_fact_procedure", Kind = "View"]}[Data],
+				    Kept = Table.SelectColumns(Data, {"procedure_id", "patient_id", "procedure", "performed_date", "performed_year"}),
+				    Typed = Table.TransformColumnTypes(Kept, {{"procedure_id", type text}, {"patient_id", type text}, {"procedure", type text}, {"performed_date", type datetime}, {"performed_year", Int64.Type}})
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
