@@ -63,3 +63,9 @@ type its own layout. Rule: one schema per resource type.
 ### Save work as you go
 A script that saves only at the end loses everything when step 3 of 5 fails.
 Saving after each step means a rerun only redoes what is missing.
+
+### VARIANT
+A Databricks column type that stores JSON of any shape and still lets SQL read
+fields inside it (bundle:entry, resource:gender::string). Like a filing box that
+accepts any form, where you can still pull out "the gender line" from each one.
+Useful when 24 record types each have their own shape.
